@@ -1,0 +1,21 @@
+{
+  "name": "ticket-system",
+  "version": "1.0.0",
+  "description": "Ticket system ",
+  "type": "module",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Diego Mora",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^5.1.0"
+  },
+  "devDependencies": {
+    "dotenv": "^16.4.7",
+    "morgan": "^1.10.0"
+  }
+}
