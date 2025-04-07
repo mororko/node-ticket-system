@@ -30,14 +30,17 @@ router.post("/signup", async (req, res) => {
       { expiresIn: "1h" }
     );
 
-    res.header("Authorization", token).status(201).send(
-      {
-        name: user.name,
-        email: user.email,
-        role: user.role,
-      },
-      token
-    );
+    res
+      .status(201)
+      .header("Authorization", token)
+      .json({
+        user: {
+          name: user.name,
+          email: user.email,
+          role: user.role,
+        },
+        token,
+      });
   } catch (err) {
     return res.status(500).send("Server error");
   }
@@ -62,7 +65,5 @@ router.post("/login", async (req, res) => {
   );
   res.header("Authorization", token).status(200).json({ token: token });
 });
-
-// router.get("/logout", (req, res) => {});
 
 export default router;

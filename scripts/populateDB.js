@@ -66,7 +66,7 @@ async function populateDB() {
   await createUsers();
   await createTickets();
   console.log("Database populated successfully");
-  mongoose.disconnect();
+  mongoose.connection.close();
 }
 
 populateDB();
