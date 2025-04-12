@@ -4,6 +4,7 @@ import auth from "../middlewares/auth.js";
 import admin from "../middlewares/admin.js";
 import buildFilter from "../middlewares/filter.js";
 import pagination from "../middlewares/pagination.js";
+import ticketSchema from "../validations/ticketValidation.js";
 
 const router = express.Router();
 
@@ -35,6 +36,12 @@ router.get("/:id", async (req, res) => {
 // Private (must be logged in)
 // Ticket schema: user, title, description, status, priority
 router.post("/", auth, async (req, res) => {
+  const { error } = ticketSchema.validate(req.body);
+
+  if (error) {
+    return res.status(400).json({ message: error.details[0].message });
+  }
+
   const ticket = new Ticket({
     user: req.user._id,
     title: req.body.title,
@@ -45,8 +52,10 @@ router.post("/", auth, async (req, res) => {
 
   try {
     const savedTicket = await ticket.save();
+    console.log("ticket saved", savedTicket);
     res.status(201).json({ ticket: savedTicket });
   } catch (err) {
+    console.log(err);
     res.status(400).json({ message: "Server Error:" + err.message });
   }
 });
